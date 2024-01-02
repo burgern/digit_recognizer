@@ -1,5 +1,7 @@
 .idea/
 data/
+wandb/
+**/__pycache__/**
 train.csv
 test.csv
 sample_submission.csv

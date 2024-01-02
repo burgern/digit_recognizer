@@ -1,5 +1,5 @@
 import torch
-from torch.utils.data import TensorDataset
+from torch.utils.data import TensorDataset, DataLoader
 from torchvision import transforms
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -61,3 +61,22 @@ class DigitRecognizerDataset(torch.utils.data.Dataset):
         plt.imshow(self.data[index].reshape(28, 28), cmap='gray')
         plt.title(f'Label: {self.labels[index]}')
         plt.show()
+
+
+def get_train_val_dataloaders(data: torch.Tensor, labels: torch.Tensor, train_validation_split: float,
+                              batch_size: int, seed: int) \
+        -> (torch.utils.data.DataLoader, torch.utils.data.DataLoader):
+    """ Returns train and validation dataloaders """
+
+    # Split data into train and validation
+    train_data, train_labels, val_data, val_labels = split_set(data, labels, train_validation_split, seed)
+
+    # Create train and validation datasets
+    train_dataset = DigitRecognizerDataset(train_data, train_labels)
+    val_dataset = DigitRecognizerDataset(val_data, val_labels)
+
+    # Create train and validation dataloaders
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True)
+
+    return train_dataloader, val_dataloader
