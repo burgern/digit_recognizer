@@ -1,5 +1,6 @@
-from torch.utils.data import TensorDataset
 import torch
+from torch.utils.data import TensorDataset
+from torchvision import transforms
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
@@ -48,7 +49,6 @@ class DigitRecognizerDataset(torch.utils.data.Dataset):
         data_batch, label_batch = self.data[index], self.labels[index]
 
         # Data Augmentation
-        from torchvision import transforms
         transform = transforms.Compose([
             transforms.ToPILImage(),
             transforms.RandomAffine(degrees=10, translate=(0.1, 0.1), scale=(0.9, 1.1)),

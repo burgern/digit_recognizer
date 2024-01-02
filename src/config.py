@@ -18,10 +18,11 @@ class Config:
 
     # neural network options
     batch_size: int = 64  # batch size for training
-    num_epochs: int = 10  # number of epochs to train for
+    num_epochs: int = 25  # number of epochs to train for
     learning_rate: float = 1e-3  # learning rate for optimizer
     momentum: float = 0.9  # momentum for optimizer
     weight_decay: float = 0.0  # weight decay for optimizer
+    init_weights: bool = True  # initialize weights using He initialization
     num_hidden: int = 128  # number of hidden units in the hidden layer
     dropout: float = 0.2  # dropout probability for dropout layer
     activation: str = 'relu'  # activation function for hidden layer
