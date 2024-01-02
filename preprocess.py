@@ -30,8 +30,8 @@ def main():
     test_data /= 255.0
 
     # Convert NumPy arrays to PyTorch tensors
-    train_data_tensor = torch.from_numpy(train_data)
-    test_data_tensor = torch.from_numpy(test_data)
+    train_data_tensor = torch.from_numpy(train_data).reshape((-1, 1, 28, 28))
+    test_data_tensor = torch.from_numpy(test_data).reshape((-1, 1, 28, 28))
     train_labels_tensor = torch.from_numpy(train_labels)
 
     # create data, test and train directories with path.mkdir(exist_ok=True)
