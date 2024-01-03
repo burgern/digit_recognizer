@@ -24,29 +24,25 @@ def main():
     optimizer = Adam(model.parameters(), lr=cfg.learning_rate)
     criterion = nn.CrossEntropyLoss()
 
-    # Set up logger
-    if cfg.debugging:
-        wandb.init(project='digit_recognizer', config=dataclasses.asdict(cfg))
-    else:
-        wandb.init(project='digit_recognizer_debugging', config=dataclasses.asdict(cfg))
+    # Set up logging with wandb
+    if cfg.wandb:
+        wandb.init(project=cfg.wandb_project, entity=cfg.wandb_entity, config=dataclasses.asdict(cfg))
 
     # Start training loop
-    for epoch in tqdm(range(cfg.num_epochs), desc='Epochs'):
+    pbar = tqdm(range(cfg.num_epochs), desc='Epochs')
+    for _ in pbar:
         # Train and validate
         train_loss, train_accuracy = train(model, optimizer, criterion, train_dataloader, device)
         val_loss, val_accuracy = validate(model, criterion, val_dataloader, device)
 
         # Log results
-        tqdm.write(f'Epoch {epoch + 1}/{cfg.num_epochs}')
-        tqdm.write(f'Training Loss: {train_loss:.4f}, Training Accuracy: {train_accuracy:.2f}%')
-        tqdm.write(f'Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.2f}%')
+        pbar.set_postfix_str(f'Train Loss / Accuracy: {train_loss:.4f} - {train_accuracy:.2f}% | '
+                             f'Val Loss / Accuracy: {val_loss:.4f} - {val_accuracy:.2f}%')
         wandb.log({'train_loss': train_loss, 'train_accuracy': train_accuracy,
                    'val_loss': val_loss, 'val_accuracy': val_accuracy})
 
     # Save model
     torch.save(model.state_dict(), str(Path(wandb.run.dir) / 'model.pt'))
-
-    print('hello')
 
 
 if __name__ == '__main__':

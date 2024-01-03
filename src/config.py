@@ -13,24 +13,28 @@ class Config:
     # basic options
     seed: int = 42  # random seed for reproducibility
     gpu: bool = True  # whether to use GPU or not
-    debugging: bool = False  # whether to run in debugging mode or not
+
+    # wandb options
+    wandb: bool = False  # whether to use wandb or not
+    wandb_project: str = 'digit_recognizer'  # wandb project name
+    wandb_entity: str = 'burgern'  # wandb entity name
 
     # data options
     train_validation_split: float = 0.8  # train/validation split
 
     # neural network options
-    num_epochs: int = 3  # number of epochs to train for
+    num_epochs: int = 10  # number of epochs to train for
     batch_size: int = 64  # batch size for training
     learning_rate: float = 1e-3  # learning rate for optimizer
-    momentum: float = 0.9  # momentum for optimizer
-    weight_decay: float = 0.0  # weight decay for optimizer
-    init_weights: bool = True  # initialize weights using He initialization
-    num_hidden: int = 128  # number of hidden units in the hidden layer
-    dropout: float = 0.2  # dropout probability for dropout layer
-    activation: str = 'relu'  # activation function for hidden layer
-    optimizer: str = 'adam'  # optimizer to use
-    loss: str = 'cross_entropy'  # loss function to use
-    scheduler: str = 'plateau'  # learning rate scheduler to use
+    # momentum: float = 0.9  # momentum for optimizer
+    # weight_decay: float = 0.0  # weight decay for optimizer
+    # init_weights: bool = True  # initialize weights using He initialization
+    # num_hidden: int = 128  # number of hidden units in the hidden layer
+    # dropout: float = 0.2  # dropout probability for dropout layer
+    # activation: str = 'relu'  # activation function for hidden layer
+    # optimizer: str = 'adam'  # optimizer to use
+    # loss: str = 'cross_entropy'  # loss function to use
+    # scheduler: str = 'plateau'  # learning rate scheduler to use
 
 
 def get_cfg() -> Config:
