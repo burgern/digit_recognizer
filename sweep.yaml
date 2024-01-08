@@ -1,0 +1,19 @@
+program: train.py
+command:
+    - python
+    - train.py
+    - --wandb
+    - --wandb_sweep
+method: bayes  # grid, random, bayes
+metric:
+  name: val_loss
+  goal: minimize
+parameters:
+  batch_size:
+    values: [32, 64, 128, 256, 512, 1024, 2048]
+  learning_rate:
+    distribution: uniform
+    min: 0.0001
+    max: 0.1
+  optimizer:
+      values: ["adam", "sgd", "rmsprop", "adagrad"]

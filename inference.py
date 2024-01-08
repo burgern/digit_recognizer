@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from simple_parsing import ArgumentParser
 import torch
 import pandas as pd
-from src import CNN, load_test_data
+from src import CNN, load_test_data, set_seed, get_device
 
 
 @dataclass
@@ -17,12 +17,14 @@ def main():
     parser = ArgumentParser()
     parser.add_arguments(Config, dest="config")
     cfg = parser.parse_args().config
+    device = get_device(cfg.gpu)
+    set_seed(cfg.seed)
 
     # Load data
     data = load_test_data()
 
     # Load model from path
-    model = CNN()
+    model = CNN().to(device)
     model.load_state_dict(torch.load(cfg.model_path))
     model.eval()
 
